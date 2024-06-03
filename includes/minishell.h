@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:15:43 by tsaari            #+#    #+#             */
-/*   Updated: 2024/06/03 14:13:26 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:38:13 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int			handle_substrings(char *str, t_parse **head);
 //expand node utils
 int			ft_iter_and_exp_com(t_parse *lst, t_env *e_lst, t_token *cur);
 int			ft_iter_and_exp_files(t_parse *head, t_env *e, t_data *d, int e_st);
-char		*expand_str_com(char *str, t_env *env_lst, t_token *current);
+char	*expand_str_com(char *str, t_env *env_lst, t_token *current, char quote);
 char		*ft_lstiter_and_make_new_str(t_parse *lst);
 t_parse		*new_node(char *str, int isexpand, int istrim);
 void		ft_lstadd_back_parse(t_parse **lst, t_parse *new);

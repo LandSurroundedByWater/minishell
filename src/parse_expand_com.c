@@ -6,7 +6,7 @@
 /*   By: tsaari <tsaari@student.hive.fi>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:38:10 by tsaari            #+#    #+#             */
-/*   Updated: 2024/06/03 13:15:36 by tsaari           ###   ########.fr       */
+/*   Updated: 2024/06/03 15:39:51 by tsaari           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	add_to_arg(t_token *current, char **arr)
 	return (0);
 }
 
-static char	*expand_substr_com(char *str, t_env *env_lst, t_token *current)
+static char	*expand_substr_com(char *str, t_env *env_lst, t_token *current, char quote)
 {
 	char	*temp;
 	char	**split;
@@ -69,7 +69,7 @@ static char	*expand_substr_com(char *str, t_env *env_lst, t_token *current)
 	else
 		temp = ft_strdup("");
 	split = ft_split(temp, ' ');
-	if (ft_array_len(split) > 1)
+	if (ft_array_len(split) > 1  && quote != '"')
 	{
 		add_to_arg(current, split + 1);
 		free(temp);
@@ -80,7 +80,7 @@ static char	*expand_substr_com(char *str, t_env *env_lst, t_token *current)
 	return (temp);
 }
 
-char	*expand_str_com(char *str, t_env *env_lst, t_token *current)
+char	*expand_str_com(char *str, t_env *env_lst, t_token *current, char quote)
 {
 	char	*new;
 	char	*temp;
@@ -98,7 +98,7 @@ char	*expand_str_com(char *str, t_env *env_lst, t_token *current)
 	while ((ft_isalnum(str[i]) == 1 || str[i] == '_') && str[i] != 0)
 		i++;
 	temp = ft_strjoin_free(ft_strdup(new), \
-	expand_substr_com(ft_substr(str, j, i - j), env_lst, current));
+	expand_substr_com(ft_substr(str, j, i - j), env_lst, current, quote));
 	free (new);
 	if (!temp)
 		return (NULL);
@@ -113,19 +113,21 @@ int	ft_iter_and_exp_com(t_parse *lst, t_env *e_lst, t_token *cur)
 {
 	char	*temp;
 	t_parse	*head;
+	char	quote;
 
 	head = lst;
 	while (head)
 	{
+		quote = head->str[0];
 		while (head->isexpand == 1 && ft_char_counter(head->str, '$') > 0)
 		{
 			if (*(ft_strchr(head->str, '$') + 1) == ' ' \
 			|| *(ft_strchr(head->str, '$') + 1) == 0)
 				break ;
 			if (head->istrim != 0)
-				temp = trim_str(expand_str_com(head->str, e_lst, cur));
+				temp = trim_str(expand_str_com(head->str, e_lst, cur, quote));
 			else
-				temp = expand_str_com(head->str, e_lst, cur);
+				temp = expand_str_com(head->str, e_lst, cur, quote);
 			if (!temp)
 				return (write_sys_error("malloc error"));
 			free(head->str);
