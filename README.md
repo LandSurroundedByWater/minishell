@@ -1,2 +1,2 @@
 # minishell_public
-Bash shell reproducing projject made with C
+Bash shell reproducing project made with C
