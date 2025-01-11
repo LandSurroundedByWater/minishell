@@ -16,10 +16,11 @@ Bash shell reproducing project made with C
   - $?
   - Handles environment variables
   - Handles environment variables
-  - pipes (| character).
+  - pipes ( | character).
   
 
+- Install
 - Download repository
-- In terminal, o to downloaded repository
+- In terminal, go to downloaded repository
 - "make"
 - "./minishell"
